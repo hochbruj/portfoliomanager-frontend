@@ -8,7 +8,7 @@ Traditional asset portfolios consist mostly of stocks and bonds. But times have 
 - [React]](https://facebook.github.io/create-react-app/) - Bootstrapped with Create React App
 - [Redux](https://redux.js.org/introduction/getting-started/)
 - [Material UI](https://material-ui.com/) - (https://stackshare.io/material-ui) - (https://github.com/mui-org/material-ui) - React components that implement Google's Material Design.
-- [Rechart] (http://recharts.org/) - For asset perfomance and asset allocation charts
+- [Rechart](http://recharts.org/) - For asset perfomance and asset allocation charts
 
 ## Installation
 
@@ -18,7 +18,7 @@ Traditional asset portfolios consist mostly of stocks and bonds. But times have 
 
 ### Create firebase project and set config
 
-You can create a free firebase project at (https://firebase.google.com/)
+You can create a free firebase project at https://firebase.google.com
 
 Copy the config variable into /portfoliomanager-frontend/src/config/fbConfig.js
 
