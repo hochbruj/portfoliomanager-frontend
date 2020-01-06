@@ -5,7 +5,7 @@ Traditional asset portfolios consist mostly of stocks and bonds. But times have 
 ## Tech stack
 
 - [Firebase](https://firebase.google.com/) - (https://stackshare.io/firebase) - A cloud-hosted NoSQL database that lets you store and sync data between your users in real-time.
-- [React]](https://facebook.github.io/create-react-app/) - Bootstrapped with Create React App
+- [React](https://facebook.github.io/create-react-app/) - Bootstrapped with Create React App
 - [Redux](https://redux.js.org/introduction/getting-started/)
 - [Material UI](https://material-ui.com/) - (https://stackshare.io/material-ui) - (https://github.com/mui-org/material-ui) - React components that implement Google's Material Design.
 - [Rechart](http://recharts.org/) - For asset perfomance and asset allocation charts
