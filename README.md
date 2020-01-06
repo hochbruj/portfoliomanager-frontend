@@ -1,8 +1,8 @@
-# Portfolio manager
+# Modern portfolio manager app
 
 ## Intro
 
-Traditional asset portfolios consisted mostly of stocks and bonds. But times have changed and new asset classes like crypto currencies have come up. Modern portfolios often include cryptos and commodities (like gold and silver), so I created an **app that pulls stock, crypto and commodities data to show and analyse the value of your total assets.
+Traditional asset portfolios consisted mostly of stocks and bonds. But times have changed and new asset classes like crypto currencies have come up. Modern portfolios often include cryptos and commodities (like gold and silver), so I created an **app that pulls stock, crypto and commodities data to show and analyse the value of your total assets**.
 
 ## Tech stack
 
