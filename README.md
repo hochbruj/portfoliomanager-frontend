@@ -1,10 +1,12 @@
 # Portfolio manager
 
-Traditional asset portfolios consist mostly of stocks and bonds. But times have changed and new asset classes like crypto currencies have come up. Modern portfolios should include cryptos and commodities, so I created an app that pulls stock, crypto and commodities (like gold and silver) data to show and analyse the value of your total assets.
+## Intro
+
+Traditional asset portfolios consisted mostly of stocks and bonds. But times have changed and new asset classes like crypto currencies have come up. Modern portfolios often include cryptos and commodities (like gold and silver), so I created an **app that pulls stock, crypto and commodities data to show and analyse the value of your total assets.
 
 ## Tech stack
 
-- [Firebase](https://firebase.google.com/) - (https://stackshare.io/firebase) - A cloud-hosted NoSQL database that lets you store and sync data between your users in real-time.
+- [Firebase](https://firebase.google.com/) - A cloud-hosted NoSQL database that lets you store and sync data between your users in real-time.
 - [React](https://facebook.github.io/create-react-app/) - Bootstrapped with Create React App
 - [Redux](https://redux.js.org/introduction/getting-started/)
 - [Material UI](https://material-ui.com/) - (https://stackshare.io/material-ui) - (https://github.com/mui-org/material-ui) - React components that implement Google's Material Design.
