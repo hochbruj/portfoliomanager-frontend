@@ -1,12 +1,9 @@
-import firebase from 'firebase/app'
-import 'firebase/firestore'
-import 'firebase/auth'
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
 
+const config = require('../secrets/firebaseConfig.json');
 
-var config =  {
-// Your web app's Firebase configuration goes here   
-    }
+firebase.initializeApp(config);
 
-firebase.initializeApp(config)
-
-export default firebase
+export default firebase;
