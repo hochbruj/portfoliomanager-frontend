@@ -122,7 +122,7 @@ async function addValues(dates) {
     db.collection('fetchedQuotes')
       .doc('dates')
       .update({
-        dates: firebase.FieldValue.arrayUnion(new Date(date)),
+        dates: firebase.firestore.FieldValue.arrayUnion(new Date(date)),
       });
   });
 
