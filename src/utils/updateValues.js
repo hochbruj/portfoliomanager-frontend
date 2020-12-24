@@ -74,21 +74,19 @@ async function addValues(dates) {
   let itemObject = {};
 
   for (const item of items) {
-    console.log('trying to get quotes for', item.item);
+    // console.log('trying to get quotes for', item.item);
 
     const quotes = await getQuotes(item.category, item.item, dates);
     itemObject[item.item] = quotes;
-    console.log('got quotes for', item.item, quotes);
+    // console.log('got quotes for', item.item, quotes);
   }
 
   msg.itemObject = itemObject;
 
-  console.log('now we havae all quotes', itemObject);
-
   //now store documents in firestore
   dates.forEach((date) => {
     for (const position of positions) {
-      console.log('reading quote for', position.item);
+      // console.log('reading quote for', position.item);
       if (position.item === 'USD') {
         quote = 1;
       } else if (position.item.slice(-2) === 'AX') {
@@ -97,13 +95,13 @@ async function addValues(dates) {
         quote = itemObject[position.item][date];
       }
 
-      console.log(
-        'writing to db',
-        position.id,
-        position.category,
-        position.item,
-        quote
-      );
+      // console.log(
+      //   'writing to db',
+      //   position.id,
+      //   position.category,
+      //   position.item,
+      //   quote
+      // );
 
       db.collection('values')
         .add({
@@ -114,7 +112,7 @@ async function addValues(dates) {
           date: new Date(date),
         })
         .then((ref) => {
-          console.log('Added document with ID: ', ref.id);
+          // console.log('Added document with ID: ', ref.id);
         });
     }
 
@@ -179,7 +177,6 @@ async function getQuotes(category, item, dates) {
     case 'Cryptocurrency':
       url = API.coinapi.url + item + API.coinapi.key;
       try {
-        console.log(url);
         result = await axios.get(url);
       } catch (err) {
         throw "Couldn't get crypto quote for " + item;
