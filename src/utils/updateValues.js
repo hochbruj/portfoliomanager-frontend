@@ -1,6 +1,6 @@
-import firebase from '../config/fbConfig';
-const API = require('../config/APIConfig');
-const axios = require('axios');
+import firebase from "../config/fbConfig";
+const API = require("../config/APIConfig");
+const axios = require("axios");
 const db = firebase.firestore();
 
 export async function updateValuesBackground() {
@@ -18,23 +18,23 @@ export async function updateValuesBackground() {
     offset = 1;
   }
   date.setDate(date.getDate() - offset);
-  date = date.toISOString().split('T')[0];
+  date = date.toISOString().split("T")[0];
 
   //check if there was arleady a run
   const lastRun = await getLastRun();
   if (date === lastRun) {
-    msg.message = 'Values were already updated on: ' + lastRun;
-    msg.type = 'success';
+    msg.message = "Values were already updated on: " + lastRun;
+    msg.type = "success";
   } else {
     // do the update run
     dates[0] = date;
-    console.log('calling add values with', dates.toString());
+    console.log("calling add values with", dates.toString());
     try {
       const result = await addValues(dates);
-      msg.message = 'Values succesfully updated for date: ' + dates.toString();
-      msg.type = 'success';
+      msg.message = "Values succesfully updated for date: " + dates.toString();
+      msg.type = "success";
     } catch (err) {
-      msg.type = 'error';
+      msg.type = "error";
       msg.message = err.toString();
     }
   }
@@ -48,7 +48,7 @@ async function addValues(dates) {
   let position = {};
   let quote;
 
-  const querySnapshot = await db.collection('positions').get();
+  const querySnapshot = await db.collection("positions").get();
   querySnapshot.forEach((doc) => {
     position = doc.data();
     position.id = doc.id;
@@ -61,7 +61,7 @@ async function addValues(dates) {
   let items = Array.from(new Set(positions.map((s) => s.item)));
   //remove the USD from list
   items = items.filter((e) => {
-    return e !== 'USD';
+    return e !== "USD";
   });
   //add the categories
   items = items.map((item) => {
@@ -74,36 +74,41 @@ async function addValues(dates) {
   let itemObject = {};
 
   for (const item of items) {
-    // console.log('trying to get quotes for', item.item);
-
-    const quotes = await getQuotes(item.category, item.item, dates);
-    itemObject[item.item] = quotes;
-    // console.log('got quotes for', item.item, quotes);
+    console.log("trying to get quotes for", item.item);
+    try {
+      const quotes = await getQuotes(item.category, item.item, dates);
+      itemObject[item.item] = quotes;
+      console.log("got quotes for", item.item, quotes);
+    } catch (err) {
+      throw err;
+    }
   }
 
   msg.itemObject = itemObject;
 
   //now store documents in firestore
+  let count = 0;
   dates.forEach((date) => {
+    console.log("Number of positions", positions.length);
     for (const position of positions) {
       // console.log('reading quote for', position.item);
-      if (position.item === 'USD') {
+      if (position.item === "USD") {
         quote = 1;
-      } else if (position.item.slice(-2) === 'AX') {
-        quote = itemObject[position.item][date] * itemObject['AUD'][date];
+      } else if (position.item.slice(-2) === "AX") {
+        quote = itemObject[position.item][date] * itemObject["AUD"][date];
       } else {
         quote = itemObject[position.item][date];
       }
 
-      // console.log(
-      //   'writing to db',
-      //   position.id,
-      //   position.category,
-      //   position.item,
-      //   quote
-      // );
+      console.log(
+        "writing to db",
+        position.id,
+        position.category,
+        position.item,
+        quote
+      );
 
-      db.collection('values')
+      db.collection("values")
         .add({
           positionId: position.id,
           portfolioId: position.portfolioId,
@@ -112,16 +117,18 @@ async function addValues(dates) {
           date: new Date(date),
         })
         .then((ref) => {
-          // console.log('Added document with ID: ', ref.id);
+          count++;
+          console.log("Added document with ID: ", ref.id);
         });
     }
 
     // add date in fetchedQuotes
-    db.collection('fetchedQuotes')
-      .doc('dates')
+    db.collection("fetchedQuotes")
+      .doc("dates")
       .update({
         dates: firebase.firestore.FieldValue.arrayUnion(new Date(date)),
       });
+    console.log(count, "documents added");
   });
 
   msg.positionsCount = positions.length;
@@ -135,29 +142,29 @@ async function getQuotes(category, item, dates) {
   let result, resultObj, resultArr;
 
   switch (category) {
-    case 'Stock Short':
-    case 'Stock Long':
+    case "Stock Short":
+    case "Stock Long":
       url = API.alpha.url + API.alpha.stock + item + API.alpha.key;
       try {
         result = await axios.get(url);
       } catch (err) {
         throw "Couldn't get stock quote for " + item;
       }
-      resultObj = result.data['Time Series (Daily)'];
+      resultObj = result.data["Time Series (Daily)"];
       if (resultObj == null) {
         throw "Couldn't get stock quote for " + item;
       }
       for (var date of dates) {
         if (resultObj[date]) {
-          values[date] = parseFloat(resultObj[date]['4. close']);
+          values[date] = parseFloat(resultObj[date]["4. close"]);
         } else {
-          throw "Couldn't get quote for " + item + ' on ' + date;
+          throw "Couldn't get quote for " + item + " on " + date;
         }
       }
       //we need to wait because of API 5 per minute limit
       await sleep(15000);
       break;
-    case 'Cash':
+    case "Cash":
       url =
         API.alpha.url + API.alpha.FX1 + item + API.alpha.FX2 + API.alpha.key;
       try {
@@ -165,16 +172,16 @@ async function getQuotes(category, item, dates) {
       } catch (err) {
         throw "Couldn't get currency quote for " + item;
       }
-      resultObj = result.data['Time Series FX (Daily)'];
+      resultObj = result.data["Time Series FX (Daily)"];
       if (resultObj == null) {
         throw "Couldn't get currency quote for " + item;
       }
       for (var date of dates) {
-        values[date] = parseFloat(resultObj[date]['4. close']);
+        values[date] = parseFloat(resultObj[date]["4. close"]);
       }
       await sleep(15000);
       break;
-    case 'Cryptocurrency':
+    case "Cryptocurrency":
       url = API.coinapi.url + item + API.coinapi.key;
       try {
         result = await axios.get(url);
@@ -188,14 +195,14 @@ async function getQuotes(category, item, dates) {
         values[date] = parseFloat(result.data.rate);
       }
       break;
-    case 'Precious Metals':
+    case "Precious Metals":
       url = API.quandl.url + item + API.quandl.key + API.quandl.start;
       try {
         result = await axios.get(url);
       } catch (err) {
         throw "Couldn't get metal quote for " + item;
       }
-      resultArr = result.data['dataset_data']['data'];
+      resultArr = result.data["dataset_data"]["data"];
       if (resultArr == null) {
         throw "Couldn't get metal quote for " + item;
       }
@@ -214,20 +221,20 @@ function sleep(ms) {
 }
 
 function getLastRun() {
-  return new Promise(function(resolve, reject) {
-    db.collection('fetchedQuotes')
-      .doc('dates')
+  return new Promise(function (resolve, reject) {
+    db.collection("fetchedQuotes")
+      .doc("dates")
       .get()
-      .then(function(doc) {
+      .then(function (doc) {
         let dates = doc.data().dates;
-        dates.sort(function(a, b) {
+        dates.sort(function (a, b) {
           return b.seconds - a.seconds;
         });
         return resolve(
-          new Date(dates[0].seconds * 1000).toISOString().split('T')[0]
+          new Date(dates[0].seconds * 1000).toISOString().split("T")[0]
         );
       })
-      .catch(function(error) {
+      .catch(function (error) {
         return reject(error);
       });
   });
