@@ -234,6 +234,8 @@ class CreatePosition extends Component {
                 <MenuItem value='BullionVault'>BullionVault</MenuItem>
                 <MenuItem value='GoldPass'>GoldPass</MenuItem>
                 <MenuItem value='Local'>Local</MenuItem>
+                <MenuItem value='Nexo'>Nexo</MenuItem>
+                <MenuItem value='Ledn'>Ledn</MenuItem>
               </Select>
             </FormControl>
           </form>
