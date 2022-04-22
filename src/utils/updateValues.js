@@ -196,19 +196,21 @@ async function getQuotes(category, item, dates) {
       }
       break;
     case "Precious Metals":
-      url = API.quandl.url + item + API.quandl.key + API.quandl.start;
+      url = API.metalsapi.url;
       try {
         result = await axios.get(url);
       } catch (err) {
         throw "Couldn't get metal quote for " + item;
       }
-      resultArr = result.data["dataset_data"]["data"];
-      if (resultArr == null) {
+      let metalKey = "XAU";
+      if (item === "Silver") {
+        metalKey = "XAG";
+      }
+      result = result.data["rates"][metalKey];
+      if (result == null) {
         throw "Couldn't get metal quote for " + item;
       }
-      resultArr.map((item) => {
-        values[item[0]] = item[1];
-      });
+      values[dates[0]] = 1 / result;
       break;
   }
   return values;

@@ -20,6 +20,9 @@ const APIConfig = {
     url: 'https://rest.coinapi.io/v1/exchangerate/',
     key: '/USD?apikey=' + apiKey.coinapi,
   },
+  metalsapi: {
+    url: 'https://www.metals-api.com/api/latest?access_key=' + apiKey.metalsapi,
+  },
 };
 
 module.exports = APIConfig;
