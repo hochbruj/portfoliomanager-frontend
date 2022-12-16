@@ -150,7 +150,7 @@ async function getQuotes(category, item, dates) {
       } catch (err) {
         throw "Couldn't get stock quote for " + item;
       }
-      resultObj = result.data["Time Series (Daily)"];
+      resultObj = result.data["Weekly Time Series"];
       if (resultObj == null) {
         throw "Couldn't get stock quote for " + item;
       }

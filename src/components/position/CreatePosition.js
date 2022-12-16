@@ -1,25 +1,25 @@
-import React, { Component } from 'react';
-import Schema from 'validate';
-import { withStyles } from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogActions from '@material-ui/core/DialogActions';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import FormControl from '@material-ui/core/FormControl';
-import { createPosition } from '../../store/actions/positionActions';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import Schema from "validate";
+import { withStyles } from "@material-ui/core/styles";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogActions from "@material-ui/core/DialogActions";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import MenuItem from "@material-ui/core/MenuItem";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import FormControl from "@material-ui/core/FormControl";
+import { createPosition } from "../../store/actions/positionActions";
+import { connect } from "react-redux";
 
 const styles = {
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap",
   },
   formControl: {
     marginTop: 10,
@@ -31,10 +31,10 @@ const styles = {
 };
 
 const initialState = {
-  category: '',
-  item: '',
-  amount: '',
-  location: '',
+  category: "",
+  item: "",
+  amount: "",
+  location: "",
   errors: null,
 };
 
@@ -149,11 +149,11 @@ class CreatePosition extends Component {
 
           <form className={classes.root}>
             <FormControl
-              variant='outlined'
+              variant="outlined"
               className={classes.formControl}
               fullWidth
             >
-              <InputLabel htmlFor='outlined-age-simple' required focused>
+              <InputLabel htmlFor="outlined-age-simple" required focused>
                 Category
               </InputLabel>
               <Select
@@ -162,51 +162,51 @@ class CreatePosition extends Component {
                 input={
                   <OutlinedInput
                     labelWidth={75}
-                    name='category'
-                    htmlFor='outlined-age-simple'
+                    name="category"
+                    htmlFor="outlined-age-simple"
                   />
                 }
               >
-                <MenuItem value='Cash'>Cash</MenuItem>
-                <MenuItem value='Stock Long'>Stock Long</MenuItem>
-                <MenuItem value='Stock Short'>Stock Short</MenuItem>
-                <MenuItem value='Precious Metals'>Precious Metals</MenuItem>
-                <MenuItem value='Cryptocurrency'>Cryptocurrency</MenuItem>
+                <MenuItem value="Cash">Cash</MenuItem>
+                <MenuItem value="Stock Long">Stock Long</MenuItem>
+                <MenuItem value="Stock Short">Stock Short</MenuItem>
+                <MenuItem value="Precious Metals">Precious Metals</MenuItem>
+                <MenuItem value="Cryptocurrency">Cryptocurrency</MenuItem>
               </Select>
             </FormControl>
 
             <TextField
               error={!!(errors && errors.item)}
               fullWidth
-              variant='outlined'
-              helperText={errors && errors.item ? errors.item : ''}
-              label='Ticker/Currency'
-              margin='normal'
+              variant="outlined"
+              helperText={errors && errors.item ? errors.item : ""}
+              label="Ticker/Currency"
+              margin="normal"
               onChange={this.handleItemChange}
               required
-              type='text'
+              type="text"
               value={item}
             />
 
             <TextField
               error={!!(errors && errors.amount)}
               fullWidth
-              helperText={errors && errors.amount ? errors.amount : ''}
-              label='Amount'
-              margin='normal'
+              helperText={errors && errors.amount ? errors.amount : ""}
+              label="Amount"
+              margin="normal"
               onChange={this.handleAmountChange}
               required
-              type='number'
+              type="number"
               value={amount}
-              variant='outlined'
+              variant="outlined"
             />
 
             <FormControl
-              variant='outlined'
+              variant="outlined"
               className={classes.formControl}
               fullWidth
             >
-              <InputLabel htmlFor='location' required>
+              <InputLabel htmlFor="location" required>
                 Location
               </InputLabel>
               <Select
@@ -215,40 +215,38 @@ class CreatePosition extends Component {
                 input={
                   <OutlinedInput
                     labelWidth={75}
-                    name='locatiom'
-                    htmlFor='location'
+                    name="locatiom"
+                    htmlFor="location"
                   />
                 }
               >
-                <MenuItem value='CBA'>CBA</MenuItem>
-                <MenuItem value='DKB'>DKB</MenuItem>
-                <MenuItem value='TD Bank'>TD Bank</MenuItem>
-                <MenuItem value='Chase'>Chase</MenuItem>
-                <MenuItem value='Fundrise'>Fundrise</MenuItem>
-                <MenuItem value='Interactive Brokers'>
+                <MenuItem value="CBA">CBA</MenuItem>
+                <MenuItem value="DKB">DKB</MenuItem>
+                <MenuItem value="TD Bank">TD Bank</MenuItem>
+                <MenuItem value="Interactive Brokers">
                   Interactive Brokers
                 </MenuItem>
-                <MenuItem value='Kraken'>Kraken</MenuItem>
-                <MenuItem value='Binance'>Binance</MenuItem>
-                <MenuItem value='Wallet'>Wallet</MenuItem>
-                <MenuItem value='BullionVault'>BullionVault</MenuItem>
-                <MenuItem value='GoldPass'>GoldPass</MenuItem>
-                <MenuItem value='Local'>Local</MenuItem>
-                <MenuItem value='Nexo'>Nexo</MenuItem>
-                <MenuItem value='Ledn'>Ledn</MenuItem>
+                <MenuItem value="Kraken">Kraken</MenuItem>
+                <MenuItem value="Binance">Binance</MenuItem>
+                <MenuItem value="Wallet">Wallet</MenuItem>
+                <MenuItem value="BullionVault">BullionVault</MenuItem>
+                <MenuItem value="Kinesis">Kinesis</MenuItem>
+                <MenuItem value="Local">Local</MenuItem>
+                <MenuItem value="Nexo">Nexo</MenuItem>
+                <MenuItem value="Ledn">Ledn</MenuItem>
               </Select>
             </FormControl>
           </form>
         </DialogContent>
 
         <DialogActions>
-          <Button color='primary' onClick={onClose}>
+          <Button color="primary" onClick={onClose}>
             Cancel
           </Button>
           <Button
-            color='primary'
+            color="primary"
             disabled={!category || !item || !amount || !location}
-            variant='contained'
+            variant="contained"
             onClick={this.handleCreateClick}
           >
             Create
